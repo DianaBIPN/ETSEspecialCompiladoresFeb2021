@@ -1,0 +1,76 @@
+package codigo;
+
+import java_cup.runtime.Symbol;
+
+parser code
+
+{:
+    
+    private Symbol s;
+
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+    }
+
+
+:};
+
+terminal ent,car,flot,consta,AND,OR,NOT,CONCA,Para,Si,Funcion,Imprimir,Escribir,
+         Cambiar,Igual,Mas,Menos,MayorQ,MenorQ,Parentesis_ap,Parentesis_c,Llave_ap,Llave_c,
+         Main,Punto_c,Punto,Identificador,Numero,NumeroD,ERROR;
+non terminal INICIO,SENTENCIA;
+
+start with INICIO;
+
+INICIO ::= ent Main Parentesis_ap Parentesis_c Llave_ap SENTENCIA Llave_c | 
+           ent Main Parentesis_ap Parentesis_c Llave_ap SENTENCIA SENTENCIA Llave_c
+;
+SENTENCIA ::= ent Identificador Punto_c | ent Identificador Igual Numero Punto_c |
+              flot Identificador Punto_c | flot Identificador Igual NumeroD Punto_c |
+              car Identificador Punto_c | car Identificador Igual Numero Punto_c |
+              car Identificador Igual Identificador Punto_c |
+              consta ent Identificador Igual Numero Punto_c |
+              consta flot Identificador Igual NumeroD Punto_c |
+              consta car Identificador Igual Identificador Punto_c |
+              ent Identificador Igual Numero Mas Numero Punto_c |
+              ent Identificador Igual Numero Menos Numero Punto_c |
+              Identificador Igual Numero Mas Numero Punto_c |
+              Identificador Igual Numero Menos Numero Punto_c |
+              Identificador Igual NumeroD Mas NumeroD Punto_c |
+              Identificador Igual NumeroD Menos Numero Punto_c |
+              flot Identificador Igual NumeroD Mas NumeroD Punto_c |
+              flot Identificador Igual NumeroD Menos NumeroD Punto_c |
+              CONCA Parentesis_ap Identificador Punto_c Identificador Parentesis_c Punto_c |
+              Para Parentesis_ap  Identificador Punto_c Numero Parentesis_c |
+              Si Parentesis_ap Numero MayorQ Igual Numero Parentesis_c |
+              Si Parentesis_ap Numero MenorQ Igual Numero Parentesis_c |
+              Si Parentesis_ap Numero MayorQ  Numero Parentesis_c |
+              Si Parentesis_ap Numero MenorQ  Numero Parentesis_c |
+              Si Parentesis_ap Numero  Igual Numero Parentesis_c |
+              Si Parentesis_ap Numero MayorQ Igual Numero AND Numero MayorQ Igual Numero Parentesis_c |
+              Si Parentesis_ap Numero MayorQ Igual Numero OR Numero MayorQ Igual Numero Parentesis_c |
+              Si Parentesis_ap NOT Numero MayorQ Igual Numero Parentesis_c |
+              Si Parentesis_ap Numero MayorQ Igual Numero AND Numero MenorQ Igual Numero Parentesis_c |
+              Si Parentesis_ap Numero MayorQ Igual Numero OR Numero MenorQ Igual Numero Parentesis_c |
+              Si Parentesis_ap NOT Numero MenorQ Igual Numero Parentesis_c |
+              Si Parentesis_ap Numero MenorQ Igual Numero AND Numero MayorQ Igual Numero Parentesis_c |
+              Si Parentesis_ap Numero MenorQ Igual Numero OR Numero MayorQ Igual Numero Parentesis_c |
+              Si Parentesis_ap Numero MenorQ  Numero AND Numero MayorQ  Numero Parentesis_c |
+              Si Parentesis_ap Numero MenorQ  Numero OR Numero MayorQ  Numero Parentesis_c |
+              Si Parentesis_ap NOT Numero MayorQ  Numero Parentesis_c |
+              Si Parentesis_ap Numero MenorQ  Numero AND Numero MenorQ  Numero Parentesis_c |
+              Si Parentesis_ap Numero MenorQ  Numero OR Numero MenorQ  Numero Parentesis_c |
+              Si Parentesis_ap Numero MayorQ  Numero AND Numero MenorQ  Numero Parentesis_c |
+              Si Parentesis_ap Numero MayorQ  Numero OR Numero MenorQ  Numero Parentesis_c |
+              Si Parentesis_ap NOT Numero MenorQ  Numero Parentesis_c |
+              Si Parentesis_ap NOT Numero Igual  Numero Parentesis_c |
+              Imprimir Parentesis_ap Identificador Parentesis_c Punto_c |
+              Escribir Parentesis_ap Identificador Punto_c car Identificador Parentesis_c Punto_c|
+              Cambiar Parentesis_ap ent Punto_c flot Identificador Parentesis_c Punto_c
+              Cambiar Parentesis_ap flot Punto_c ent Identificador Parentesis_c Punto_c
+              Cambiar Parentesis_ap car Punto_c ent Identificador Parentesis_c Punto_c
+;
